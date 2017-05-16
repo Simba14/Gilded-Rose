@@ -99,12 +99,12 @@ describe GildedRose do
     end
 
     context "item is 'Backstage passes to a TAFKAL80ETC concert'" do
-      context 'before sell by date is reached' do
-        before do
-          item_list(name: 'Backstage passes to a TAFKAL80ETC concert', quality: 40, sell_in: 10)
-          @stock = described_class.new(@items)
-        end
+      before do
+        item_list(name: 'Backstage passes to a TAFKAL80ETC concert', quality: 40, sell_in: 10)
+        @stock = described_class.new(@items)
+      end
 
+      context 'before sell by date is reached' do
         it 'quality value increase by 2 once sell in date is lower than 11 days' do
           @stock.update_quality
           expect(@item.quality).to eq 42
@@ -114,6 +114,14 @@ describe GildedRose do
           @item.sell_in = 5
           @stock.update_quality
           expect(@item.quality).to eq 43
+        end
+      end
+
+      context 'once sell by date is past' do
+        it 'quality value is 0' do
+          @item.sell_in = 0
+          @stock.update_quality
+          expect(@item.quality).to eq 0
         end
       end
     end
