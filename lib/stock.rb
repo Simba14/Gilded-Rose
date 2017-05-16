@@ -1,7 +1,14 @@
 # Not sure yet
-class GildedRose
-  def initialize(items)
+require_relative './item'
+require_relative './sell_in'
+class Stock
+  def initialize(items: items, sell_in: SellIn.new)
     @items = items
+    @sell_in = sell_in
+  end
+
+  def update
+
   end
 
   def update_quality
@@ -30,7 +37,7 @@ class GildedRose
         end
       end
       if item.name != "Sulfuras, Hand of Ragnaros"
-        item.sell_in = item.sell_in - 1
+        @sell_in.update(item)
       end
       if item.sell_in < 0
         if item.name != "Aged Brie"

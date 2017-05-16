@@ -1,18 +1,15 @@
-require 'gilded_rose'
+require 'stock'
 require 'item'
 
-describe GildedRose do
+describe Stock do
 
-  def item_list(name: 'normal', sell_in: 1, quality: 50)
-    @item = Item.new(name, sell_in, quality)
-    @items = [@item]
-  end
+  # let(:sell_in) { SellIn.new }
 
   describe '#update_quality' do
     context 'all goods' do
       before do
         item_list(quality: 0)
-        @stock = described_class.new(@items)
+        @stock = described_class.new(items: @items)
         @stock.update_quality
       end
 
@@ -41,7 +38,7 @@ describe GildedRose do
     context 'item is a normal good' do
       before do
         item_list
-        @stock = described_class.new(@items)
+        @stock = described_class.new(items: @items)
         @stock.update_quality
       end
 
@@ -59,7 +56,7 @@ describe GildedRose do
       context 'before sell by date is reached' do
         before do
           item_list(name: 'Aged Brie', quality: 49)
-          @stock = described_class.new(@items)
+          @stock = described_class.new(items: @items)
           @stock.update_quality
         end
 
@@ -75,7 +72,7 @@ describe GildedRose do
       context 'once sell by date is past' do
         before { item_list(name: 'Aged Brie', quality: 10, sell_in: 0)}
         it 'quality increases by 2 with time' do
-          @stock = described_class.new(@items)
+          @stock = described_class.new(items: @items)
           @stock.update_quality
           expect(@item.quality).to eq 12
         end
@@ -85,7 +82,7 @@ describe GildedRose do
     context "item is 'Sulfuras, Hand of Ragnaros'" do
       before do
         item_list(name: 'Sulfuras, Hand of Ragnaros', quality: 80)
-        @stock = described_class.new(@items)
+        @stock = described_class.new(items: @items)
       end
 
       it 'sell in value does not change' do
@@ -101,7 +98,7 @@ describe GildedRose do
     context "item is 'Backstage passes to a TAFKAL80ETC concert'" do
       before do
         item_list(name: 'Backstage passes to a TAFKAL80ETC concert', quality: 40, sell_in: 10)
-        @stock = described_class.new(@items)
+        @stock = described_class.new(items: @items)
       end
 
       context 'before sell by date is reached' do
@@ -125,6 +122,11 @@ describe GildedRose do
         end
       end
     end
+  end
+
+  def item_list(name: 'normal', sell_in: 1, quality: 50)
+    @item = Item.new(name, sell_in, quality)
+    @items = [@item]
   end
 
 end

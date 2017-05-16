@@ -1,6 +1,6 @@
 #!/usr/bin/ruby -w
 
-require './lib/gilded_rose'
+require './lib/stock'
 require './lib/item'
 
 puts "OMGHAI!"
