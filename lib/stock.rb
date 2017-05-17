@@ -14,11 +14,20 @@ class Stock
     item.quality -= 1 if item.sell_in <= 0
   end
 
+  def update_aged_brie(item)
+    @update_sell_in.update(item)
+    return if item.quality >= 50
+    item.quality += 1
+    item.quality += 1 if item.sell_in <= 0
+  end
+
   def update_quality
     @items.each do |item|
       case item
       when 'normal'
         return update_normal(item)
+      when 'Aged Brie'
+        return update_aged_brie(item)
       end
 
       if item.name != "Aged Brie" and item.name != "Backstage passes to a TAFKAL80ETC concert"
