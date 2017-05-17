@@ -1,18 +1,26 @@
-# Not sure yet
 require_relative './item'
-require_relative './sell_in'
+require_relative './update_sell_in'
+# Not sure yet
 class Stock
-  def initialize(items: items, sell_in: SellIn.new)
+  def initialize(items:, update_sell_in: UpdateSellIn.new)
     @items = items
-    @sell_in = sell_in
+    @update_sell_in = update_sell_in
   end
 
-  def update
-
+  def update_normal(item)
+    @update_sell_in.update(item)
+    return if item.quality.zero?
+    item.quality -= 1
+    item.quality -= 1 if item.sell_in <= 0
   end
 
   def update_quality
     @items.each do |item|
+      case item
+      when 'normal'
+        return update_normal(item)
+      end
+
       if item.name != "Aged Brie" and item.name != "Backstage passes to a TAFKAL80ETC concert"
         if item.quality > 0
           if item.name != "Sulfuras, Hand of Ragnaros"
@@ -37,7 +45,7 @@ class Stock
         end
       end
       if item.name != "Sulfuras, Hand of Ragnaros"
-        @sell_in.update(item)
+        @update_sell_in.update(item)
       end
       if item.sell_in < 0
         if item.name != "Aged Brie"
