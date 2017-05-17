@@ -1,3 +1,4 @@
+# updates sell in and quality values for aged brie
 class AgedBrie
   def update(item)
     item.sell_in -= 1

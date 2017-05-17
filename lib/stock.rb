@@ -3,11 +3,11 @@ require_relative './update_sell_in'
 require_relative './normal_item'
 require_relative './aged_brie'
 require_relative './backstage_pass'
+require_relative './conjured'
 # Not sure yet
 class Stock
-  def initialize(items:, update_sell_in: UpdateSellIn.new)
+  def initialize(items:)
     @items = items
-    @update_sell_in = update_sell_in
   end
 
   def update_quality
@@ -22,6 +22,9 @@ class Stock
       when 'Backstage passes to a TAFKAL80ETC concert'
         backstage_pass = BackstagePass.new
         backstage_pass.update(item)
+      when 'Conjured'
+        conjured = Conjured.new
+        conjured.update(item)
       when 'Sulfuras, Hand of Ragnaros'
         break
       end

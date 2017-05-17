@@ -1,3 +1,4 @@
+# updates sell in and quality values for backstage passes
 class BackstagePass
   def update(item)
     item.sell_in -= 1

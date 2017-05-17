@@ -123,6 +123,23 @@ describe Stock do
         end
       end
     end
+
+    context 'item is conjured' do
+      before do
+        item_list(name: 'Conjured')
+        @stock = described_class.new(items: @items)
+        @stock.update_quality
+      end
+
+      it 'before sell by date is reached, quality value decreases by 2' do
+        expect(@item.quality).to equal 48
+      end
+
+      it 'once sell by date is past, quality value falls by 4' do
+        @stock.update_quality
+        expect(@item.quality).to equal 44
+      end
+    end
   end
 
   def item_list(name: 'normal', sell_in: 2, quality: 50)
