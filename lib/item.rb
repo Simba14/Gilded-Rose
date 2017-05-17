@@ -1,4 +1,4 @@
-# 
+# Creates a new item with three properties: name, sell in, and quality
 class Item
   attr_accessor :name, :sell_in, :quality
 
