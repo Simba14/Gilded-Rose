@@ -26,10 +26,11 @@ describe Stock do
       end
 
       it 'sell in value falls by one' do
-        expect(@item.sell_in).to equal 0
+        expect(@item.sell_in).to equal 1
       end
 
       it 'sell in value can be negative' do
+        @stock.update_quality
         @stock.update_quality
         expect(@item.sell_in).to equal(-1)
       end
@@ -124,7 +125,7 @@ describe Stock do
     end
   end
 
-  def item_list(name: 'normal', sell_in: 1, quality: 50)
+  def item_list(name: 'normal', sell_in: 2, quality: 50)
     @item = Item.new(name, sell_in, quality)
     @items = [@item]
   end
